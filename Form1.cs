@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.FileIO;
 
-namespace CatView
+namespace Gram
 {
     public partial class Form1 : Form
     {
@@ -120,10 +116,11 @@ namespace CatView
         private void deleteButton_Click(object sender, EventArgs e)
         {
             String thiFile = allImages[k];
-            TryToDelete(thiFile);
-            allImages.Remove(thiFile); 
             k++;
             getPicture(k);
+            allImages.Remove(thiFile);
+            TryToDelete(thiFile);
+
         }
 
         private void setAsDesktop_Click(object sender, EventArgs e)
@@ -175,10 +172,10 @@ namespace CatView
             try
             {
                 Console.WriteLine(f);
-                if (System.IO.File.Exists(f))
+                if (FileSystem.FileExists(f))
                 {
-                    File.Delete(f);  
-                    //FileSystem.DeleteFile(f);
+                    // File.Move(f, "C:/$Recycle.Bin"); 
+                    FileSystem.DeleteFile(f,UIOption.OnlyErrorDialogs,RecycleOption.SendToRecycleBin);
                     Console.WriteLine("deleted");
                      
                 }

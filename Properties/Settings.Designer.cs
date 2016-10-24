@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CatView.Properties
+namespace Gram.Properties
 {
 
 

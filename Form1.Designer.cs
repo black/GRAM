@@ -1,4 +1,4 @@
-﻿namespace CatView
+﻿namespace Gram
 {
     partial class Form1
     {

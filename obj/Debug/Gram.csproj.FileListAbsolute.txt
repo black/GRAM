@@ -10,8 +10,9 @@ C:\Users\Kuro\Documents\Visual Studio 2015\Projects\CatView\CatView\obj\Debug\Gr
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\bin\Debug\CatView.exe.config
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\bin\Debug\CatView.exe
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\bin\Debug\CatView.pdb
-C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\CatView.Form1.resources
+C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\Gram.Form1.resources
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\CatView.Properties.Resources.resources
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\Gram.csproj.GenerateResource.Cache
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\CatView.exe
 C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\CatView.pdb
+C:\Users\Kuro\Desktop\GitHub\GRAM\GRAM\obj\Debug\Gram.csprojResolveAssemblyReference.cache
