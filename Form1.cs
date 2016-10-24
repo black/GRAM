@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Microsoft.VisualBasic.FileIO;
 
 namespace Gram
 {
@@ -116,23 +117,54 @@ namespace Gram
         private void deleteButton_Click(object sender, EventArgs e)
         {
             String thiFile = allImages[k];
+            TryToDelete(thiFile);
             k++;
             getPicture(k);
             allImages.Remove(thiFile);
-            TryToDelete(thiFile);
+        
 
         }
 
         private void setAsDesktop_Click(object sender, EventArgs e)
         {
             Console.WriteLine("set as deskptop");
-            String thiFile = allImages[k];
+            String thisFile = allImages[k];
+            SetWallpaper(thisFile);
         }
 
         private void fitToScreen_Click(object sender, EventArgs e)
         {
-
+            String nextFile = allImages[k];
+            fitImage(nextFile);
         }
+
+  
+        protected override void OnMouseWheel(MouseEventArgs mevent)
+        {
+            if (pictureBox1.Image!=null)
+            {
+                if (mevent.Delta != 0)
+                {
+                    if (mevent.Delta <= 0)
+                    {
+                        //set minimum size to zoom
+                        Console.WriteLine("Fixed");
+                        if (pictureBox1.Width < 50)
+                        {
+                           // pictureBox1.Image.Size.Width += Convert.ToInt32(pictureBox1.Width * mevent.Delta / 1000);
+                           // pictureBox1.Image.Size.Height += Convert.ToInt32(pictureBox1.Height * mevent.Delta / 1000);
+                        }
+                    }
+                    else {
+                        //set maximum size to zoom
+                        Console.WriteLine("Zooming");
+                        if (pictureBox1.Width > 500)
+                            return;
+                    }
+                  
+                }
+            }
+        } 
 
         void goNext()
         {
@@ -172,10 +204,10 @@ namespace Gram
             try
             {
                 Console.WriteLine(f);
-                if (FileSystem.FileExists(f))
+                if (File.Exists(f))
                 {
-                    // File.Move(f, "C:/$Recycle.Bin"); 
-                    FileSystem.DeleteFile(f,UIOption.OnlyErrorDialogs,RecycleOption.SendToRecycleBin);
+                    // File.Move(f, "C:/$Recycle.Bin");  
+                    File.Delete(f);
                     Console.WriteLine("deleted");
                      
                 }
@@ -195,31 +227,28 @@ namespace Gram
         }
 
 
-        /*
-        void SetWallpaper(String path)
-        {
-            // DLL Import
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
-            private static extern int SystemParametersInfo(
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SystemParametersInfo(
             Int32 uAction,
             Int32 uParam,
             String lpvParam,
             Int32 fuWinIni);
+        // Consts
+        private const Int32 SPI_SETDESKWALLPAPER = 20;
+        private const Int32 SPIF_UPDATEINIFILE = 0x01;
+        private const Int32 SPIF_SENDWININICHANGE = 0x02;
+ 
 
-            // Consts
-            private const Int32 SPI_SETDESKWALLPAPER = 20;
-            private const Int32 SPIF_UPDATEINIFILE = 0x01;
-            private const Int32 SPIF_SENDWININICHANGE = 0x02;
-
-            // Changing the background.
-
+        public void SetWallpaper(String path)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop",true);
+            // Changing the background. 
             SystemParametersInfo(
             SPI_SETDESKWALLPAPER,
             0,
             path, // desktopBackground is the bmp location
             SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-        }
-    */
+        } 
 
     }
 }
