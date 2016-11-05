@@ -17,7 +17,7 @@ namespace Gram
 
         public Form1()
         {
-            InitializeComponent(); 
+            InitializeComponent();  
         }
 
         public Form1(String[] file)
@@ -37,6 +37,8 @@ namespace Gram
                 setFileName(pathDirectory);
                 fitImage(filepath);
             }
+
+
         }
 
         private void openFile(object sender, EventArgs e)
@@ -53,6 +55,11 @@ namespace Gram
                 k = allImages.IndexOf(path);
                 fitImage(path);
                 //  Dispose();
+                if (pictureBox1.BackgroundImage != null)
+                {
+                    pictureBox1.BackgroundImage.Dispose();
+                    pictureBox1.BackgroundImage = null;
+                } 
             }
         }
 
@@ -143,28 +150,42 @@ namespace Gram
         {
             if (pictureBox1.Image!=null)
             {
+               
                 if (mevent.Delta != 0)
                 {
                     if (mevent.Delta <= 0)
                     {
-                        //set minimum size to zoom
-                        Console.WriteLine("Fixed");
-                        if (pictureBox1.Width < 50)
-                        {
-                           // pictureBox1.Image.Size.Width += Convert.ToInt32(pictureBox1.Width * mevent.Delta / 1000);
-                           // pictureBox1.Image.Size.Height += Convert.ToInt32(pictureBox1.Height * mevent.Delta / 1000);
-                        }
+                        Console.WriteLine("Not zooming");
                     }
                     else {
-                        //set maximum size to zoom
-                        Console.WriteLine("Zooming");
-                        if (pictureBox1.Width > 500)
-                            return;
+                        int zoomFactor = 10;
+                        Size newSize = new Size((int)(pictureBox1.Image.Size.Width * zoomFactor), (int)(pictureBox1.Image.Size.Height * zoomFactor));
+                        Bitmap bmp = new Bitmap(pictureBox1.Image, newSize);
                     }
                   
                 }
             }
-        } 
+        }
+
+       /* private void ZoomInOut(bool zoom)
+        {
+            //Zoom ratio by which the images will be zoomed by default
+            int zoomRatio = 10;
+            //Set the zoomed width and height
+            int widthZoom = pictureBox1.Image.Size.Width * zoomRatio / 100;
+            int heightZoom = pictureBox1.Image.Size.Height * zoomRatio / 100;
+            //zoom = true --> zoom in
+            //zoom = false --> zoom out
+            if (!zoom)
+            {
+                widthZoom *= -1;
+                heightZoom *= -1;
+            }
+            //Add the width and height to the picture box dimensions
+          //  pictureBox1.Image.Size.Width += widthZoom;
+          //  pictureBox1.Image.Size.Width += heightZoom;
+
+        }*/
 
         void goNext()
         {
@@ -237,7 +258,6 @@ namespace Gram
         private const Int32 SPI_SETDESKWALLPAPER = 20;
         private const Int32 SPIF_UPDATEINIFILE = 0x01;
         private const Int32 SPIF_SENDWININICHANGE = 0x02;
- 
 
         public void SetWallpaper(String path)
         {
